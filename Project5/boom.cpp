@@ -5,6 +5,7 @@ using namespace std;
 class Point {
 private:
     double x, y, z;
+	// It's only for me
 
 public:
     Point() : x(0), y(0), z(0) {}
