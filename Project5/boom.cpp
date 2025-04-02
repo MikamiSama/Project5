@@ -1,11 +1,8 @@
 #include <iostream>
-#include <cstdio>
 using namespace std;
 
 class Point {
-private:
     double x, y, z;
-	// It's only for me
 
 public:
     Point() : x(0), y(0), z(0) {}
@@ -19,48 +16,31 @@ public:
     void setY(double val) { y = val; }
     void setZ(double val) { z = val; }
 
-    void saveToFile(const char* filename) const {
-        FILE* file = fopen(filename, "w");
-        if (file) {
-            fprintf(file, "%f %f %f", x, y, z);
-            fclose(file);
-            cout << "Point saved to " << filename << endl;
-        }
-        else {
-            cout << "Error opening file for writing" << endl;
-        }
+    void display() const {
+        cout << "Point: (" << x << ", " << y << ", " << z << ")\n";
     }
 
-    void loadFromFile(const char* filename) {
-        FILE* file = fopen(filename, "r");
-        if (file) {
-            int read = fscanf(file, "%lf %lf %lf", &x, &y, &z);
-            fclose(file);
-            if (read == 3) {
-                cout << "Point loaded from " << filename << endl;
-            }
-            else {
-                cout << "Error reading data from file" << endl;
-            }
-        }
-        else {
-            cout << "Error opening file for reading" << endl;
-        }
+    void serialize() const {
+        cout << "SERIALIZED: " << x << " " << y << " " << z << "\n";
     }
 
-    void print() const {
-        cout << "Point: (" << x << ", " << y << ", " << z << ")" << endl;
+    void deserialize() {
+        cout << "Enter serialized point (x y z): ";
+        cin >> x >> y >> z;
     }
 };
 
 int main() {
-    Point p(1.5, 2.5, 3.5);
+    Point p1(1.0, 2.0, 3.0);
+    p1.display();
 
-    p.saveToFile("point.txt");
+    cout << "\nSerializing point:\n";
+    p1.serialize();
 
     Point p2;
-    p2.loadFromFile("point.txt");
-    p2.print();
+    cout << "\nDeserializing new point:\n";
+    p2.deserialize();
+    p2.display();
 
     return 0;
 }
